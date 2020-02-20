@@ -1,0 +1,159 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+@import './drawer.scss';
+
+body {
+  height: 100%;
+  background-color: #f2f6f9;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font: 14px/1.6 Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,微软雅黑,Arial,sans-serif;
+  color: #555;
+}  
+
+
+label {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+
+*, *:after, *:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, 
+ol {list-style: none;}
+
+div:focus {
+  outline: none;
+}
+
+#app {
+  height: 100%;
+}
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+/**弹性盒子-移动端**/
+.flex, 
+.flex-c {
+	justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.flex2, 
+.flex, 
+.flex-c2, 
+.flex-c {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+.flex-c2, 
+.flex-c {
+  flex-direction: column;
+}
+.flex .one,
+.flex2 .one,
+.flex-c .one,
+.flex-c2 .one{
+ 	flex: 1;
+}
+.flex .two,
+.flex2 .two,
+.flex-c .two,
+.flex-c2 .two{
+	flex: 2;
+}
+
+/* 显示  */
+.white-box{
+  padding: 15px;
+  position: relative;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow:1px 1px 4px rgba(144, 156, 167, 0.5);
+}
+.inbl{display: inline-block;}
+.show {display: block;}
+.none {display: none;}
+
+/* 字体 */
+.fn {font-weight: normal !important;}
+.fb {font-weight: bold !important}
+.f12r{font-size:.12rem}
+.f14r{font-size:.14rem}
+.f16r{font-size:.16rem}
+.f18r{font-size:.18rem}
+.f24r{font-size:.24rem}
+.f12{font-size:12px}
+.f14{font-size:14px}
+.f16{font-size:16px}
+.f17{font-size:17px !important}
+.f18{font-size:18px}
+.f24{font-size:24px}
+.f30{font-size:30px}
+.col-1{color: #444;}
+.col-2{color: #999;}
+.col-3{color: #bbb;}
+.col-b{color: #1389fd;}
+.col-r{color: #fd1347;}
+.col-y{color: #f1b309;}
+.col-g{color: #00ca54;}
+.col-w{color: #fff;}
+
+/* 布局  */
+.wh100{height: 100%;width: 100%;display: inline-block;}
+.v-cent {vertical-align: middle;}
+.cent {text-align: center;}
+.f-ri {text-align: right;}
+.f-le {text-align: left;}
+.pr {position: relative;}
+.pa {position: absolute;}
+.pf {position: fixed;}
+.fr {float: right;}
+.fl {float: left;}
+.cb {clear: both;}
+
+.margin-0{
+  margin: 0;
+}
+.pad-bot-15{
+  padding-bottom: 15px;
+}
+.btns-right {
+  text-align: right;
+}
