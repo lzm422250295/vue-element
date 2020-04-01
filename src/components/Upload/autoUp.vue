@@ -15,15 +15,15 @@
       :disabled="readonly"
       :multiple="multiple"
       :headers="headers"
+      :auto-upload="false"
+      :http-request="upFun"
     >
 
-      <el-button v-if="!readonly&&listType!=='picture-card'" class="pr" size="small" type="primary" :disabled="canUp">{{ btnName }}
-        <el-tooltip :content="`上传附件${fileType}的格式,且文件小于${ fileSize }M`" placement="top" effect="light">
-          <el-button class="uploadInfo" icon="el-icon-info" circle size="mini" />
-        </el-tooltip>
-      </el-button>
+      <template v-if="!readonly">
+        <i slot="trigger" class="el-icon-plus" />
+        <div slot="tip" class="el-upload__tip"><el-button size="mini" type="primary" @click="submitUpload">上传选择的图片</el-button></div>
+      </template>
 
-      <i v-if="!readonly&&listType==='picture-card'" class="el-icon-plus" />
     </el-upload>
     <el-dialog :visible.sync="dialogVisible">
       <img width="100%" :src="dialogImageUrl">
@@ -156,6 +156,9 @@ export default {
     this.getfiles()
   },
   methods: {
+    upFun(param) {
+      param.onSuccess()
+    },
     clearFiles() {
       this.$refs.upload.clearFiles()
     },
@@ -287,11 +290,20 @@ export default {
       } else {
         return true
       }
+    },
+    submitUpload() {
+      this.$refs.upload.submit()
     }
   }
 }
 </script>
 <style lang="scss">
+.aa{
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
 .el-icon-circle-check:before {
     content: "\e720";
 }
