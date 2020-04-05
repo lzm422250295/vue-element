@@ -123,6 +123,11 @@ export default {
         case 'radar': // 雷达图
           chart.setOption(this.generatorRadarOption())
           break
+        case 'map': // 地图
+          this.$nextTick(() => {
+            chart.setOption(this.generatorMapOption())
+          })
+          break
         case 'funnel': // 漏斗图
           chart.setOption(this.generatorFunnelOption())
           break
@@ -318,55 +323,156 @@ export default {
         title: {
           text: this.titleText,
           subtext: this.subText,
-          textStyle: this.config.textStyle
+          x: this.config.x ? this.config.x : 'left', // 左右位置
+          y: this.config.y ? this.config.y : 0, // 上下位置
+          textStyle: this.config.textStyle ? this.config.textStyle : { color: '#777' }
         },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{a} <br/>{b} : {c}%'
-        },
-        legend: {
-          orient: 'vertical',
-          left: 'right',
-          textStyle: this.config.legendStyle
-        },
-        calculable: true,
+        legend: this.config.legend,
+        // 提示框: trigger-类型（item、axis）,formatter-格式化 （a：系列名称，b：类目值，c：数值）
+        tooltip: this.config.tooltip ? this.config.tooltip : { trigger: 'axis' },
         series: [
           {
             name: '',
             type: 'funnel',
-            left: '10%',
-            top: 60,
-            // x2: 80,
-            bottom: 60,
-            width: '80%',
-            // height: {totalHeight} - y - y2,
+            left: '5%',
+            width: '85%',
+            height: '75%',
             min: 0,
             max: 100,
-            minSize: '0%',
-            maxSize: '100%',
-            sort: 'descending',
-            gap: 2,
+            gap: 10,
             label: {
-              show: true,
-              position: 'inside'
+              position: 'inside',
+              formatter: '{b} {c}%'
             },
-            labelLine: {
-              length: 10,
-              lineStyle: {
-                width: 1,
-                type: 'solid'
-              }
-            },
-            itemStyle: {
+            itemStyle: this.chartData.itemStyle ? this.chartData.itemStyle : { // 拐点颜色
               borderColor: '#fff',
               borderWidth: 1
             },
-            emphasis: {
-              label: {
-                fontSize: 20
+            emphasis: { // 鼠标 hover 高亮样式
+              shadowBlur: 5,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.4)'
+            },
+            data: this.chartData.data // 数据 name-数据名称， value-数据值
+          }
+        ]
+      }
+    },
+    generatorMapOption() {
+      return {
+        title: {
+          text: this.titleText,
+          subtext: this.subText,
+          textStyle: this.config.textStyle
+        },
+        tooltip: {
+          trigger: 'item',
+          showDelay: 0,
+          transitionDuration: 0.2,
+          formatter: function(params) {
+            return params.seriesName + '<br/>' + params.name
+          }
+        },
+        visualMap: {
+          show: false,
+          min: 1,
+          max: 340,
+          inRange: {
+            color: [
+              '#17acd0',
+              '#17acd0',
+              '#17acd0',
+              '#16a5ce',
+              '#16a5ce',
+              '#16a5ce',
+              '#159ecc',
+              '#159ecc',
+              '#159ecc',
+              '#1496c9',
+              '#1496c9',
+              '#1496c9',
+              '#1392c7',
+              '#1392c7',
+              '#1392c7',
+              '#1288c4',
+              '#1288c4',
+              '#1288c4',
+              '#107ec1',
+              '#107ec1',
+              '#107ec1',
+              '#107abf',
+              '#107abf',
+              '#107abf',
+              '#0f74bd',
+              '#0f74bd',
+              '#0f74bd',
+              '#0d69ba',
+              '#0d69ba',
+              '#0d69ba',
+              '#0d64b8',
+              '#0d64b8',
+              '#0d64b8',
+              '#0c61b7',
+              '#0c61b7'
+            ]
+          }
+          // text: ['High', 'Low'], // 文本，默认为数值文本
+          // calculable: true
+        },
+        series: [
+          {
+            name: '中国',
+            type: 'map',
+            roam: false,
+            map: '中国',
+            // 文本位置修正
+            textFixed: {
+              Alaska: [20, -20]
+            },
+            // itemStyle: {
+            //   emphasis: {
+            //     areaColor: '#d0f2ff', // 设置为空字符串可使颜色不变
+            //     label: {
+            //       show: true, // 默认是否显示省份名称
+            //       color: '#198bff'
+            //     },
+            //     areaStyle: {
+            //       color: '#3fb0e6' // 选中状态的地图板块颜色
+            //     }
+            //   },
+            //   normal: {
+            //     label: {
+            //       show: true, // 默认是否显示省份名称
+            //       fontWeight: 900,
+            //       color: '#123559'
+            //     },
+            //     borderWidth: 0.5
+            //   }
+            // },
+            itemStyle: {
+              normal: {
+                label: {
+                  show: true, // 默认是否显示省份名称
+                  color: '#def4ff'
+                },
+                areaStyle: {
+                  color: '#3fb0e6' // 默认的地图板块颜色
+                },
+                borderWidth: 0,
+                borderColor: '#e1e1e1'
+              },
+              emphasis: {
+                areaColor: '#fff', // 设置为空字符串可使颜色不变
+                label: {
+                  show: true, // 默认是否显示省份名称
+                  color: '#198bff'
+                },
+                areaStyle: {
+                  color: '#3fb0e6' // 选中状态的地图板块颜色
+                }
               }
             },
-            data: this.chartData
+            data: this.chartData.data
           }
         ]
       }

@@ -43,6 +43,24 @@ export default [
           'children': null
         }]
       }, {
+        'path': '/bigData',
+        'name': '',
+        'component': 'Layout',
+        'redirect': '',
+        'title': '',
+        'icon': '',
+        'hidden': '',
+        'children': [{
+          'path': '/BigData',
+          'name': 'BigData',
+          'component': 'BigData',
+          'redirect': '',
+          'title': '大数据',
+          'icon': 'dashboard',
+          'hidden': '',
+          'children': null
+        }]
+      }, {
         'path': '/richText',
         'name': '',
         'component': 'Layout',
@@ -96,7 +114,7 @@ export default [
           'hidden': '',
           'children': null
         }]
-      },{
+      }, {
         'path': '/drawer',
         'name': '',
         'component': 'Layout',
@@ -128,6 +146,15 @@ export default [
           'component': 'ChooseTimeDemo',
           'redirect': '',
           'title': '时间选择',
+          'icon': '',
+          'hidden': '',
+          'children': null
+        }, {
+          'path': '/TextCarousel',
+          'name': 'TextCarousel',
+          'component': 'TextCarousel',
+          'redirect': '',
+          'title': '滚动列表',
           'icon': '',
           'hidden': '',
           'children': null
