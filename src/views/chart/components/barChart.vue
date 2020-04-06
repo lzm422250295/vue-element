@@ -90,7 +90,7 @@ export default {
           data: [10, 45, 23, 38, 14, 35, 80]
         }],
 
-        xAxisData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        xAxisData: ['模拟字段超出处理方法', '周二', '周三', '周四', '周五', '周六', '周日']
       },
       barConfig: {
         legend: {
@@ -102,6 +102,22 @@ export default {
           textStyle: {
             color: '#666',
             fontSize: 13
+          }
+        },
+        axisLabel: {
+          formatter: function(params) { // 标签输出形式 ---请开始你的表演
+            // var index = 10
+            var newstr = ''
+            for (let i = 0; i < params.length; i++) {
+              const tmp = params.substring(i, i + 1)
+              newstr += tmp
+              // +'\n'
+            }
+            if (newstr.length > 5) {
+              return newstr.substring(0, 5) + '...'
+            } else {
+              return newstr
+            }
           }
         }
       }

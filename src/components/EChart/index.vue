@@ -208,7 +208,7 @@ export default {
             axisLine: this.config.axisLine ? this.config.axisLine : { lineStyle: { color: '#777' }},
             // 图表中辅助线线样式
             splitLine: this.config.splitLine ? this.config.splitLine : { show: false },
-            axisLabel: {
+            axisLabel: this.config.axisLabel ? this.config.axisLabel : {
               interval: 0,
               show: true,
               textStyle: {
