@@ -3,11 +3,13 @@
     :style="`height:${height}px;`"
     class="wrap"
     @mouseover="onBox"
-    @mouseout="outBox">
+    @mouseout="outBox"
+  >
     <div
       id="box"
       :style="`animation:licenceText ${time}s 0s infinite linear ${go};transform: translateY(0);`"
-      class="col-w">
+      class="col-w"
+    >
 
       <div v-for="(li) in list" :key="li.id" @click="doSomeThing(li)">
         <span class="tit">{{ li.data }}</span>
@@ -27,7 +29,7 @@ export default {
   name: 'AssText',
   props: {
     list: { // 数据
-      type: '',
+      type: Array,
       default() {
         return
       }
@@ -39,7 +41,7 @@ export default {
       }
     },
     height: { // 自定义高度
-      type: '',
+      type: Number,
       default() {
         return 300
       }
@@ -55,7 +57,7 @@ export default {
   },
   // 更新的时候运动
   mounted() {
-    txt.height = 105 * this.list.length
+    txt.height = 40 * this.list.length
     txt.node = document.getElementById('box')
     if (this.height >= txt.height) {
       this.isMove = false
@@ -89,14 +91,14 @@ export default {
     overflow: hidden;
     text-overflow:ellipsis;
     white-space: nowrap;
-    color:#28e2ff;
+    color:#288cff;
   }
 }
 #box {
   padding: 0 15px;
   &>div{
     padding-top:3px;
-    height: 105px;
+    height: 40px;
     transition: all .3s;
     position: relative;
     border-bottom:1px dashed rgba(255,255,255,.3);

@@ -134,5 +134,24 @@ module.exports = {
           config.optimization.runtimeChunk('single')
         }
       )
+  },
+  css: {
+    // 是否使用css分离插件 ExtractTextPlugin
+    extract: process.env.NODE_ENV !== 'development',
+    // 开启 CSS source maps?
+    sourceMap: false,
+    // css预设器配置项
+    // 启用 CSS modules for all css / pre-processor files.
+    modules: false,
+    loaderOptions: {
+      postcss: {
+        // 这是rem适配的配置
+        plugins: [
+          require('postcss-px2rem')({
+            remUnit: 50
+          })
+        ]
+      }
+    }
   }
 }

@@ -157,3 +157,11 @@ div:focus {
 .btns-right {
   text-align: right;
 }
+
+
+
+@media screen and (min-width: 321px) and (max-width:1921px) {
+  html {
+      font-size: 48PX;
+  }
+}

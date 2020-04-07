@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TextCarousel :list="data" :height="150" />
+    <TextCarousel :list="data" :height="50" :speed="2" />
   </div>
 </template>
 
