@@ -1,11 +1,14 @@
 <template>
   <div
-    :style="`height:${autoHeight}px;`"
+    :style="`height:${height}px;`"
     class="wrap"
     @mouseover="onBox"
-    @mouseout="outBox"
-  >
-    <div id="box" class="col-w">
+    @mouseout="outBox">
+    <div
+      id="box"
+      :style="`animation:licenceText ${time}s 0s infinite linear ${go};transform: translateY(0);`"
+      class="col-w">
+
       <div v-for="(li) in list" :key="li.id" @click="doSomeThing(li)">
         <span class="tit">{{ li.data }}</span>
         <span class="fr">{{ li.time }}</span>
@@ -21,9 +24,10 @@
 <script>
 import txt from './txt'
 export default {
+  name: 'AssText',
   props: {
     list: { // 数据
-      type: Array,
+      type: '',
       default() {
         return
       }
@@ -31,11 +35,11 @@ export default {
     speed: { // 执行间隔时间
       type: Number,
       default() {
-        return 50
+        return 14
       }
     },
     height: { // 自定义高度
-      type: Number,
+      type: '',
       default() {
         return 300
       }
@@ -44,45 +48,36 @@ export default {
   // 父组件传入数据， 数组形式 []
   data() {
     return {
-      distance: 0, // 距离
-      autoHeight: '' // 自适应高度
+      time: '',
+      go: 'paused',
+      isMove: ''
     }
   },
   // 更新的时候运动
-  updated() {
-    this.onBox()
-    txt.height = document.getElementById('box').clientHeight
-    txt.height2 = txt.height / 2
+  mounted() {
+    txt.height = 105 * this.list.length
     txt.node = document.getElementById('box')
-    // if (this.height >= txt.height) {
-    //   return
-    // }
-    this.autoHeight = this.height >= txt.height2 ? txt.height2 : this.height
-    this.move(txt.height, txt.node)
+    if (this.height >= txt.height) {
+      this.isMove = false
+      return
+    }
+    txt.addCSS(`@keyframes licenceText {  from { transform: translateY(0); }  to{ transform: translateY(${-txt.height}px);}}`)
+    this.isMove = true
+    this.time = txt.height / this.height * this.speed
+    this.go = 'running'
   },
   methods: {
     onBox() {
-      clearInterval(txt.fun)
+      this.go = 'paused'
     },
     outBox() {
-      // if (this.height >= txt.height) {
-      //   return
-      // }
-      this.move(txt.height, txt.node)
+      if (this.height >= txt.height) {
+        return
+      }
+      this.go = 'running'
     },
     doSomeThing(val) {
       this.$emit('doSomeThing', val)
-    },
-    move(height, node) {
-      // 设置位移
-      txt.fun = setInterval(() => {
-        this.distance = this.distance - 1
-        // 如果位移超过文字宽度，则回到起点
-        if (-this.distance >= height / 2) {
-          this.distance = 0
-        }
-        node.style.transform = 'translateY(' + this.distance + 'px)'
-      }, this.speed)
     }
   }
 }
@@ -91,29 +86,58 @@ export default {
 .wrap {
   overflow: hidden;
   .tit{
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
     color:#28e2ff;
   }
 }
 #box {
+  padding: 0 15px;
   &>div{
-    cursor: pointer;
-    height: 35px;
+    padding-top:3px;
+    height: 105px;
     transition: all .3s;
     position: relative;
-    line-height: 35px;
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-    padding-right:110px;
     border-bottom:1px dashed rgba(255,255,255,.3);
-    .result{
-      position: absolute;
-      right: 0;
-      top: 0;
+    p{
+      height: 30px;
+      line-height:30px;
+      text-align: left;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+      img{
+        float:left;
+        margin-top: 6px;
+        width:30px;
+      }
+      em{
+        font-size: 12px;
+        font-style: normal;
+        color: #c2cbdc;
+      }
     }
-    &:hover{
-      background-color: rgba(255,255,255,.15);
-      color:#28e2ff;
+    .el-button{
+      padding: 6px 14px;
+      float: right;
+      margin: 3px 0 0 9px;
+      color: white;
+      transition:all .3s;
+      &.msg-btn{
+        background-color: rgba(224, 12, 70, 0.3);
+        border: 1px solid #a22056;
+        &:hover{
+          background-color: rgba(224, 12, 70, 0.6);
+        }
+      }
+      &.det-btn{
+        background-color: rgba(60, 143, 253, 0.3);
+        border: 1px solid #2c80bb;
+        &:hover{
+          background-color: rgba(60, 143, 253, 0.6);
+        }
+      }
     }
   }
 }
