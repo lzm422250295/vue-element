@@ -329,6 +329,7 @@ export default {
           box-shadow: 1px 0 4px rgb(49, 183, 231);
         }
         span{
+          font-size: 12px;
           color: #5fe8ff;
         }
         p{
@@ -434,6 +435,7 @@ export default {
           box-shadow: 1px 0 4px rgb(49, 183, 231);
         }
         p{
+          font-size: 12px;
           color: #5fe8ff;
         }
         span{
