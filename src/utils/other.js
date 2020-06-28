@@ -1,6 +1,3 @@
-import { validatenull } from './validate'
-import request from '@/router/axios'
-
 // 复制
 export const copy = text => {
   var oInput = document.createElement('input')
@@ -59,33 +56,6 @@ export const deepClone = data => {
     }
   }
   return obj
-}
-/**
- * 判断路由是否相等
- */
-export const diff = (obj1, obj2) => {
-  delete obj1.close
-  var o1 = obj1 instanceof Object
-  var o2 = obj2 instanceof Object
-  if (!o1 || !o2) { /*  判断不是对象  */
-    return obj1 === obj2
-  }
-
-  if (Object.keys(obj1).length !== Object.keys(obj2).length) {
-    return false
-    // Object.keys() 返回一个由对象的自身可枚举属性(key值)组成的数组,例如：数组返回下表：let arr = ["a", "b", "c"];console.log(Object.keys(arr))->0,1,2;
-  }
-
-  for (var attr in obj1) {
-    var t1 = obj1[attr] instanceof Object
-    var t2 = obj2[attr] instanceof Object
-    if (t1 && t2) {
-      return diff(obj1[attr], obj2[attr])
-    } else if (obj1[attr] !== obj2[attr]) {
-      return false
-    }
-  }
-  return true
 }
 
 /**
@@ -217,18 +187,6 @@ export const loadStyle = url => {
   head.appendChild(link)
 }
 /**
- * 判断路由是否相等
- */
-export const isObjectValueEqual = (a, b) => {
-  let result = true
-  Object.keys(a).forEach(ele => {
-    const type = typeof (a[ele])
-    if (type === 'string' && a[ele] !== b[ele]) result = false
-    else if (type === 'object' && JSON.stringify(a[ele]) !== JSON.stringify(b[ele])) result = false
-  })
-  return result
-}
-/**
  * 生成随机len位数字
  */
 export const randomLenNum = (len, date) => {
@@ -256,44 +214,6 @@ export const openWindow = (url, title, w, h) => {
   if (window.focus) {
     newWindow.focus()
   }
-}
-
-/**
- *  <img> <a> src 处理
- * @returns {PromiseLike<T | never> | Promise<T | never>}
- */
-export function handleImg(url, id) {
-  return validatenull(url) ? null : request({
-    url: url,
-    method: 'get',
-    responseType: 'blob'
-  }).then((response) => { // 处理返回的文件流
-    const blob = response.data
-    const img = document.getElementById(id)
-    img.src = URL.createObjectURL(blob)
-    window.setTimeout(function() {
-      window.URL.revokeObjectURL(blob)
-    }, 0)
-  })
-}
-
-export function handleDown(filename, bucket) {
-  return request({
-    url: '/admin/sys-file/' + bucket + '/' + filename,
-    method: 'get',
-    responseType: 'blob'
-  }).then((response) => { // 处理返回的文件流
-    const blob = response.data
-    const link = document.createElement('a')
-    link.href = URL.createObjectURL(blob)
-    link.download = filename
-    document.body.appendChild(link)
-    link.click()
-    window.setTimeout(function() {
-      URL.revokeObjectURL(blob)
-      document.body.removeChild(link)
-    }, 0)
-  })
 }
 
 export function getQueryString(url, paraName) {
